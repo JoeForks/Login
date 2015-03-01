@@ -191,4 +191,16 @@ class LoginProvider
             }
         }
     }
+
+    /**
+     * Set the request instance.
+     *
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
+    }
 }
