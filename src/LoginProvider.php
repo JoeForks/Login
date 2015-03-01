@@ -44,9 +44,16 @@ class LoginProvider
     protected $clientSecret;
 
     /**
+     * The redirect url.
+     *
+     * @var string
+     */
+    protected $redirectUrl;
+
+    /**
      * The guzzle http client.
      *
-     * @var array
+     * @var \GuzzleHttp\Client
      */
     protected $client;
 
@@ -72,7 +79,7 @@ class LoginProvider
     /**
      * Redirect the user of the application to the provider's authentication screen.
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function redirect()
     {
@@ -107,7 +114,7 @@ class LoginProvider
     /**
      * Get the User instance for the authenticated user.
      *
-     * @return \StyleCI\Login\User
+     * @return array
      */
     public function user()
     {
@@ -173,6 +180,8 @@ class LoginProvider
      */
     protected function getEmail($token)
     {
+        $options = ['headers' => ['Accept' => 'application/vnd.github.v3+json']];
+
         $response = $this->client->get('https://api.github.com/user/emails?access_token='.$token, $options);
         $emails = json_decode($response->getBody(), true);
 
