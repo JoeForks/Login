@@ -53,7 +53,7 @@ class LoginServiceProvider extends ServiceProvider
             $clientSecret = $app->config->get('login.services.client_secret');
             $clientRedirect = $app->config->get('login.services.redirect');
 
-            $provider = new LoginProvider($request, $clientId, $clientSecret, $clientRedirect)
+            $provider = new LoginProvider($request, $clientId, $clientSecret, $clientRedirect);
             $app->refresh('request', $provider, 'setRequest');
 
             return $provider;
