@@ -58,6 +58,13 @@ class LoginProvider
     protected $client;
 
     /**
+     * The request scope.
+     *
+     * @var array
+     */
+    protected $scope = ['admin:repo_hook', 'read:org', 'repo', 'user:email'];
+
+    /**
      * Create a new provider instance.
      *
      * @param \Illuminate\Http\Request $request
@@ -103,7 +110,7 @@ class LoginProvider
         $query = [
             'client_id'     => $this->clientId,
             'redirect_uri'  => $this->redirectUrl,
-            'scope'         => implode(',', ['admin:repo_hook', 'read:org', 'repo', 'user:email']),
+            'scope'         => implode(',', $this->scope),
             'state'         => $state,
             'response_type' => 'code',
         ];
@@ -202,5 +209,19 @@ class LoginProvider
     public function setRequest(Request $request)
     {
         $this->request = $request;
+    }
+
+    /**
+     * Set the request scope.
+     *
+     * @param array $scope
+     *
+     * @return $this
+     */
+    public function setScope(array $scope)
+    {
+        $this->scope = $scope;
+
+        return $this;
     }
 }
